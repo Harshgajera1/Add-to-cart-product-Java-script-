@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>view page</title>
+    <link rel="stylesheet" href="css/all.min.css">
+    <style>
+        .cart {
+            display: flex;
+            justify-content: end;
+            margin-right: 30px;
+            font-size: 30px;
+            position: relative;
+        }
+        h2{
+            text-align: center;
+        }
+
+        h5 {
+            position: absolute;
+            right: 70px;
+            top: 0;
+            background-color: #293416;
+            border-radius: 50%;
+            padding: 0px 6px;
+            color: #fff;
+            font-size: 18px;
+            margin-top: 75px;
+        }
+
+        .icon {
+            color: green;
+
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Add To Cart Product</h2>
+    <h2 class="cart"><a href="data.html" target="_blank"><i class="fa-solid fa-cart-plus icon"></i></a></h2>
+    <h5 id="cartitem"></h5>
+    <div id="result" style="display: flex; flex-wrap: wrap;"></div>
+
+
+    <script src="jquery.min.js"></script>
+    <script>
+
+        viewdata();
+        function viewdata() {
+            var stdata = localStorage.getItem('stdata');
+            var prodata = JSON.parse(stdata);
+            var para = '';
+            for (var i = 1; i < prodata.length; i++) {
+
+                para += ' <div style="width: 300px; border: 2px solid black; padding: 5px; margin: 30px;">';
+                para += '<div style="border: 2px solid black;"><img src="' + prodata[i].image + '" width="100%" height="200px"></div>';
+                para += '<div style="padding:10px;">';
+                para += '<p style="text-align: center;">' + prodata[i].name + '</p>';
+                para += '<p style="text-align: center;">' + prodata[i].price + '</p>';
+                para += '<p style="text-align: center;">' + prodata[i].brand + '</p>';
+                para += '<p>' + prodata[i].discription + '</p>';
+                para += '<div style="display: flex; justify-content: center">';
+                para += '<button style="cursor: pointer;background: #ffac8f; border: 1px solid #000000;padding: 5px 10px;border-radius: 5px;" onclick="cart(' + prodata[i].code + ')">Add To Cart</button>';
+                para += '</div>';
+                para += '</div>';
+                para += '</div>';
+                $('#result').html(para);
+            }
+        }
+
+
+        function cart(no) {
+            // console.log(no);
+            var stdata = localStorage.getItem('stdata');
+            var prodata = JSON.parse(stdata);
+
+            var stcart = localStorage.getItem('cartData');
+            var arr = JSON.parse(stcart) || [];
+            // console.log(stdata);
+            // var arr = [];
+            for (var i = 0; i < prodata.length; i++) {
+                if (prodata[i].code == no) {
+                    var a = prodata[i];
+                    arr.push(a);
+                }
+            }
+            var cartst = JSON.stringify(arr);
+            localStorage.setItem('cartData', cartst);
+            // console.log(arr.length);
+            document.getElementById('cartitem').innerHTML= arr.length;
+        }
+
+    </script>
+
+</body>
+
+</html>

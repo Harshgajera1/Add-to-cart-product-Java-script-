@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>product project</title>
+    <style>
+        h2{
+            margin-left: 70px;
+            margin-bottom: 30px;
+        }
+        .btn{
+            text-decoration: none;
+            background-color:rgb(164 168 181);
+            color: black;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+        .btn:hover{
+            background-color: #28a028;
+            transition: all .8s;
+        }
+        .mb-20{
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Product Project</h2>
+    <table>
+        <tr>
+            <td>Product:</td>
+            <td><input type="text" id="name" value="phone" readonly></td>
+        </tr>
+
+        <tr>
+            <td>Phone brand: </td>
+            <td>
+                <select name="brand" id="brand" onchange="priceData()">
+                    <option value="">--select brand--</option>
+                    <option value="Apple">Apple</option>
+                    <option value="Samsung">Samsung</option>
+                    <option value="Vivo">Vivo</option>
+                    <option value="Oppo">Oppo</option>
+                    <option value="Mi">Mi</option>
+                    <option value="Motorola">Motorola</option>
+                    <option value="Poco">Poco</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Price: </td>
+            <td><input type="text" id="brandprice" readonly></td>
+        </tr>
+
+        <tr>
+            <td>Product Discription: </td>
+            <td> <textarea id="disc" cols="40" rows="5" readonly></textarea></td>
+        </tr>
+
+        <tr>
+            <td>Image: </td>
+            <td>
+                <img id="result" height='200px' style="border: 1px solid black; width: 100%;">
+            </td>
+        </tr>
+
+        <tr>
+            <td></td>
+            <td> <input type="submit" value="Add Product" class="mb-20" onclick="productData()"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><a href="./view.html" target="_blank" class="btn">View Added Product</a></td>
+            
+        </tr>
+    </table>
+
+
+    <script src="jquery.min.js"></script>
+    <script>
+        function priceData() {
+
+            var brand = $('#brand').val();
+            if (brand == 'Apple') {
+                $('#brandprice').val(88000);
+                $('#disc').val('The iPhone is a smartphone made by Apple that combines a computer, iPod, digital camera and cellular phone into one device with a touchscreen interface.');
+                image = 'images/ap.jpeg';
+                $('#result').attr('src', image);
+            }
+            else if (brand == 'Samsung') {
+                $('#brandprice').val(52000);
+                $('#disc').val("The original Samsung Galaxy smartphone debuted in 2009, and the line's first tablet, the Samsung Galaxy Tab, came out the following year.");
+                image = 'images/sa.jpeg';
+                $('#result').attr('src', image);
+            }
+            else if (brand == 'Vivo') {
+                $('#brandprice').val(22000);
+                $('#disc').val('Vivo Electronics Corp. is a phone brand based in Dongguan, Guangdong, China. It was founded in 2009. The company is another Chinese smartphone India recently. ');
+                image = 'images/vi.jpeg';
+                $('#result').attr('src', image);
+            }
+            else if (brand == 'Oppo') {
+                $('#brandprice').val(8000);
+                $('#disc').val('OPPO Electronics Corp. is an electronics manufacturer based in Guangdong, China. Known for smartphones, portable media, LCD-TVs, and DVD/Blu-ray players. ');
+                image = 'images/op.jpeg';
+                $('#result').attr('src', image);
+            }
+            else if (brand == 'Mi') {
+                $('#brandprice').val(11000);
+                $('#disc').val(`What is the features of Mi Phone, Mi Note isn't just a smartphone. It's a combination of the most advanced technologies to date - a powerful processor, Hi-Fi audio module.`);
+                image = 'images/mi.jpeg';
+                $('#result').attr('src', image);
+            }
+            else if (brand == 'Motorola') {
+                $('#brandprice').val(13000);
+                $('#disc').val('Motorola Mobility was established in 2011 following the split of Motorola into two companies, with Motorola Solutions catering to the enterprise segment.');
+                image = 'images/mo.jpeg';
+                $('#result').attr('src', image);
+            }
+            else if (brand == 'Poco') {
+                $('#brandprice').val(14000);
+                $('#disc').val('Xiaomi has been one of the fastest growing smartphone manufacturers in India over the past 18 months, becoming the biggest smartphone brand in the process.');
+                image = 'images/po.jpeg';
+                $('#result').attr('src', image);
+            }
+            else {
+                $('#brandprice').val('');
+                $('#disc').val('');
+            }
+        };
+
+        var prodata = [{
+            name: "demo",
+            brand: "demo",
+            price: "demo",
+            discription: "demo",
+            image: 'demo',
+        }];
+
+        function productData() {
+            var name = $('#name').val();
+            var brand = $('#brand').val();
+            var price = $('#brandprice').val();
+            var disc = $('#disc').val();
+            var img = document.querySelectorAll('#result')[0].src;
+            var product =
+            {
+                name: name,
+                brand: brand,
+                price: price,
+                discription: disc,
+                image: img,
+                code : prodata.length
+            };
+            prodata.push(product);
+            var st = JSON.stringify(prodata);
+            localStorage.setItem('stdata', st);
+        }
+    </script>
+</body>
+</html>

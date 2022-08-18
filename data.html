@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cartdata</title>
+    <style>
+        td {
+            padding: 15px;
+        }
+        h2{
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>View The Product You Selected</h2>
+    <tr>
+        <td onchange="total()"></td>
+    </tr>
+    <div id="result"></div>
+
+    <script>
+        viewData();
+        qunfun();
+        // totalfun();
+        function viewData() {
+            var stcart = localStorage.getItem('cartData');
+            var data = JSON.parse(stcart);
+            // console.log(data);
+            para = '<table border="1"><tr><td><b>Name</b></td><td><b>Brand</b></td><td><b>Price</b></td><td><b>Img</b></td><td><b>Quantity</b></td><td><b>Total</b></td><td><b>Delete</b></td></tr>';
+            for (var i = 0; i < data.length; i++) {
+                para += '<tr>';
+                para += '<td>' + data[i].name + '</td>';
+                para += '<td>' + data[i].brand + '</td>';
+                para += '<td>' + data[i].price + '</td>';
+                para += '<td><img src="' + data[i].image + '" height="120px" width="120px"></td>';
+                para += '<td><select id="qun" onchange="qunfun(' + data[i].code + ')" ><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></td>';
+                para += '<td id="total">' + data[i].price + '</td>';
+                para += '<td>' + '<a href="javascript:deletedata(' + data[i].code + ')">delete</a>' + '</td>'
+            }
+            para += '</table>';
+            document.getElementById('result').innerHTML = para;
+
+        }
+        function deletedata(no) {
+            var stcart = localStorage.getItem('cartData');
+            var data = JSON.parse(stcart);
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].code == no) {
+                    data.splice(i, 1);
+                }
+            }
+
+            var newstcart = JSON.stringify(data);
+            localStorage.setItem('cartData', newstcart);
+            viewData();
+        }
+
+        function qunfun(no) {
+            console.log(no);
+            var stcart = localStorage.getItem('cartData');
+            var data = JSON.parse(stcart);
+            var num = document.getElementById('qun').value;
+            for (var i = 0; i < data.length; i++) {
+                if (no == data[i].code) {
+                    document.getElementById('total').innerHTML = num * data[0].price;
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
